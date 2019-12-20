@@ -1,26 +1,22 @@
 import nexmo
-from dotenv import load_dotenv
+import os
 from flask import Flask, render_template
 from flask_bootstrap import Bootstrap
 
-from .util import env_var
-
-# Load environment variables from .env file
-load_dotenv('.env')
-
 # Load in configuration from environment
-NEXMO_API_KEY = env_var('NEXMO_API_KEY')
-NEXMO_API_SECRET = env_var('NEXMO_API_SECRET')
-NEXMO_NUMBER = env_var('NEXMO_NUMBER')
+NEXMO_API_KEY = os.environ.get('NEXMO_API_KEY')
+NEXMO_API_SECRET = os.environ.get('NEXMO_API_SECRET')
+NEXMO_NUMBER = os.environ.get('NEXMO_NUMBER')
 
 # Create new nexmo client object
 nexmo_client = nexmo.Client(
     api_key=NEXMO_API_KEY, api_secret=NEXMO_API_SECRET
 )
 
+# Create and bootstrap app
 app = Flask(__name__)
 Bootstrap(app)
-app.config['SECRET_KEY'] = env_var('FLASK_SECRET_KEY')
+app.config['SECRET_KEY'] = os.environ.get('FLASK_SECRET_KEY')
 
 
 @app.route('/')
