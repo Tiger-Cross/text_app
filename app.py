@@ -41,7 +41,13 @@ def send_sms():
     })
 
     # Redirect the user back to the form
-    return redirect(url_for('sms_form'))
+    return redirect(url_for('confirm_sms'))
+
+
+@app.route('/sms_conf')
+def confirm_sms():
+    """A view that renders the confirmation page for sending an sms."""
+    return render_template('sms_confirmation.html')
 
 
 if __name__ == '__main__':
