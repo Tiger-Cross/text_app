@@ -11,9 +11,11 @@ idna==2.8
 itsdangerous==1.1.0
 Jinja2==2.10.3
 MarkupSafe==1.1.1
+messagebird==1.5.0
 nexmo==1.5.0
 pycparser==2.19
 PyJWT==1.7.1
+python-dateutil==2.8.1
 python-dotenv==0.6.4
 pytz==2019.3
 requests==2.22.0
