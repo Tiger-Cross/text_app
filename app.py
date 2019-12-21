@@ -1,6 +1,6 @@
 import nexmo
 import os
-from flask import Flask, render_template
+from flask import Flask, render_template, request, redirect, url_for
 from flask_bootstrap import Bootstrap
 
 # Load in configuration from environment
@@ -20,9 +20,28 @@ app.config['SECRET_KEY'] = os.environ.get('FLASK_SECRET_KEY')
 
 
 @app.route('/')
-def send_sms():
+def sms_form():
     """A view that renders the send sms form."""
     return render_template('sms_form.html')
+
+
+@app.route('/send_sms', methods=['POST'])
+def send_sms():
+    """POST endpoint that sends an sms. """
+
+    # Extract form values.
+    recipient_number = request.form['recipient']
+    message = request.form['message']
+
+    # Send sms message.
+    result = nexmo_client.send_message({
+        'from': NEXMO_NUMBER,
+        'to': recipient_number,
+        'text': message
+    })
+
+    # Redirect the user back to the form
+    return redirect(url_for('sms_form'))
 
 
 if __name__ == '__main__':
