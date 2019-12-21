@@ -1,17 +1,14 @@
-import nexmo
+import messagebird
 import os
 from flask import Flask, render_template, request, redirect, url_for
 from flask_bootstrap import Bootstrap
 
 # Load in configuration from environment
-NEXMO_API_KEY = os.environ.get('NEXMO_API_KEY')
-NEXMO_API_SECRET = os.environ.get('NEXMO_API_SECRET')
-NEXMO_NUMBER = os.environ.get('NEXMO_NUMBER')
+SMS_API_KEY = os.environ.get('SMS_API_KEY')
+SENDER_NUMBER = os.environ.get('SENDER_NUMBER')
 
-# Create new nexmo client object
-nexmo_client = nexmo.Client(
-    api_key=NEXMO_API_KEY, api_secret=NEXMO_API_SECRET
-)
+# Create new sms client object
+sms_client = messagebird.Client(SMS_API_KEY)
 
 # Create and bootstrap app
 app = Flask(__name__)
@@ -34,11 +31,12 @@ def send_sms():
     message = request.form['message']
 
     # Send sms message.
-    result = nexmo_client.send_message({
-        'from': NEXMO_NUMBER,
-        'to': recipient_number,
-        'text': message
-    })
+    result = sms_client.message_create(
+        '+' + SENDER_NUMBER,
+        '+' + recipient_number,
+        message,
+        {'reference': 'From my text app'}
+    )
 
     # Redirect the user back to the form
     return redirect(url_for('confirm_sms'))
