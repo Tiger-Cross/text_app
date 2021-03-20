@@ -9,7 +9,7 @@ Flask-Bootstrap==3.3.7.1
 gunicorn==19.9.0
 idna==2.8
 itsdangerous==1.1.0
-Jinja2==2.10.3
+Jinja2==2.11.3
 MarkupSafe==1.1.1
 messagebird==1.5.0
 nexmo==1.5.0
